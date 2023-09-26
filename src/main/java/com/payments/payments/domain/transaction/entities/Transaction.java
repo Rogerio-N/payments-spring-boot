@@ -6,8 +6,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.UUID;
 
 @Entity(name = "transactions")
 @Table(name = "transactions")
@@ -23,8 +21,7 @@ public class Transaction extends Audit {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID code;
+    private String code;
 
     @ManyToOne
     @JoinColumn(name = "sender_id")

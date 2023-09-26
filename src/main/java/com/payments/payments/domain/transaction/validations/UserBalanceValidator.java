@@ -21,8 +21,7 @@ public class UserBalanceValidator implements Validator<Transaction> {
 
         if(userBalance.compareTo(transactionValue) < 0){
             validationResult.setSuccess(false);
-            FieldError fieldError = new FieldError("user", "balance","Saldo insuficiente para realizar a transação");
-            validationResult.getErrors().add(fieldError);
+            validationResult.addError("user", "balance", "Saldo insuficiente para realizar a transação");
         }
 
         return validationResult;

@@ -9,6 +9,8 @@ import com.payments.payments.repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class TransactionService {
     @Autowired
@@ -18,26 +20,28 @@ public class TransactionService {
     @Autowired
     private TransactionRepository repository;
 
-    public void createTransaction(CreateTransactionDTO transactionDTO) throws Exception {
-//        Transaction transaction = this.mapDTOtoEntity(transactionDTO);
-        Transaction transaction = new Transaction();
+    public Transaction createTransaction(CreateTransactionDTO transactionDTO) throws Exception {
+        Transaction transaction = this.mapDTOtoEntity(transactionDTO);
+
         ValidationResult validationResult = validationChain.validate(transaction);
 
         if(!validationResult.getSuccess()){
             throw new Exception(validationResult.getErrors().toString());
         }
 
-//        userService.decreaseUserBalance(transaction.getSender(), transaction.getValue());
-//        userService.increaseUserBalance(transaction.getReceiver(), transaction.getValue());
+        userService.decreaseUserBalance(transaction.getSender(), transaction.getValue());
+        userService.increaseUserBalance(transaction.getReceiver(), transaction.getValue());
+        return repository.save(transaction);
     }
 
-//    private Transaction mapDTOtoEntity(CreateTransactionDTO transactionDTO) throws Exception {
-//        User receiver = userService.findUserById(transactionDTO.receiverId());
-//        User sender = userService.findUserById(transactionDTO.senderId());
-//        return Transaction.builder()
-//                .sender(sender)
-//                .receiver(receiver)
-//                .value(transactionDTO.value())
-//                .build();
-//    }
+    private Transaction mapDTOtoEntity(CreateTransactionDTO transactionDTO) throws Exception {
+        User receiver = userService.findUserById(transactionDTO.receiverId());
+        User sender = userService.findUserById(transactionDTO.senderId());
+        return Transaction.builder()
+                .sender(sender)
+                .receiver(receiver)
+                .code(UUID.randomUUID().toString())
+                .value(transactionDTO.value())
+                .build();
+    }
 }

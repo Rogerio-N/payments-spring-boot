@@ -1,6 +1,7 @@
 package com.payments.payments.application.controllers;
 
 import com.payments.payments.domain.user.dtos.CreateUserDTO;
+import com.payments.payments.domain.user.entities.User;
 import com.payments.payments.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ public class UserController {
     UserService service;
 
     @PostMapping()
-    public ResponseEntity createUser(@RequestBody CreateUserDTO createUserDTO) {
+    public ResponseEntity<User> createUser(@RequestBody CreateUserDTO createUserDTO) {
         return ResponseEntity.ok(service.createUser(createUserDTO));
     }
 }
