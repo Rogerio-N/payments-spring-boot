@@ -34,5 +34,6 @@ public class Transaction extends Audit {
     @JoinColumn(name = "receiver_id")
     private User receiver;
 
+    @Column(name = "transactionValue")
     private BigDecimal value;
 }
