@@ -1,5 +1,6 @@
 package com.payments.payments.application.exception;
 
+import com.payments.payments.domain.transaction.exception.InvalidUserType;
 import com.payments.payments.domain.transaction.exception.NotEnoughBalance;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,14 @@ public class CustomExceptionHandler {
     @ExceptionHandler(NotEnoughBalance.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Map<String, String>> notEnoughBalance(NotEnoughBalance ex) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        return ResponseEntity.badRequest().body(response);
+    }
+
+    @ExceptionHandler(InvalidUserType.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Map<String, String>> invalidUserType(InvalidUserType ex) {
         Map<String, String> response = new HashMap<>();
         response.put("message", ex.getMessage());
         return ResponseEntity.badRequest().body(response);
