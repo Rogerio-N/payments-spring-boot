@@ -23,7 +23,7 @@ public class ValidationChain<T> {
         for(Validator<T> validator: validators) {
             result = validator.validate(input, result);
             if(!result.getSuccess()){
-                break;
+                throw new Exception(result.getErrors().get(0).getDefaultMessage());
             }
 
         }
