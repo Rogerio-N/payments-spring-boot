@@ -2,6 +2,7 @@ package com.payments.payments.application.exception;
 
 import com.payments.payments.domain.transaction.exception.InvalidUserType;
 import com.payments.payments.domain.transaction.exception.NotEnoughBalance;
+import com.payments.payments.domain.user.exception.UserNotFound;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -36,6 +37,14 @@ public class CustomExceptionHandler {
         Map<String, String> response = new HashMap<>();
         response.put("message", ex.getMessage());
         return ResponseEntity.badRequest().body(response);
+    }
+
+    @ExceptionHandler(UserNotFound.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<Map<String, String>> userNotFound(UserNotFound ex) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
 }

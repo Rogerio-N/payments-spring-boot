@@ -2,6 +2,7 @@ package com.payments.payments.services;
 
 import com.payments.payments.domain.user.dtos.CreateUserDTO;
 import com.payments.payments.domain.user.entities.User;
+import com.payments.payments.domain.user.exception.UserNotFound;
 import com.payments.payments.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ public class UserService {
     private UserRepository userRepository;
 
     public User findUserById(Long id) throws Exception {
-        return userRepository.findById(id).orElseThrow(() -> new Exception("Usuário não encontrado"));
+        return userRepository.findById(id).orElseThrow(UserNotFound::new);
     }
 
     public User createUser(CreateUserDTO userDTO) {
