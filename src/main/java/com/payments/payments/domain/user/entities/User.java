@@ -1,5 +1,7 @@
 package com.payments.payments.domain.user.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.payments.payments.domain.audit.entities.Audit;
 import com.payments.payments.domain.user.enums.UserType;
 import jakarta.persistence.*;
@@ -31,6 +33,7 @@ public class User extends Audit {
     @Column(unique = true, nullable = false)
     private String document;
 
+    @JsonIgnore
     private String password;
 
     private BigDecimal balance;
