@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -21,10 +20,6 @@ public class UserService {
 
     public User createUser(CreateUserDTO userDTO) {
         return userRepository.save(convertUserDTOtoEntity(userDTO));
-    }
-
-    public void updateUser(User user) {
-        userRepository.save(user);
     }
 
     public void increaseUserBalance(User user, BigDecimal value) {
